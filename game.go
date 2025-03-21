@@ -1,7 +1,11 @@
 package cogni
 
 import (
+	"fmt"
+	"math"
+
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
@@ -38,8 +42,9 @@ func (g *gameManager) Update() error {
 }
 
 func (g *gameManager) Draw(screen *ebiten.Image) {
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %d", int(math.Floor(ebiten.ActualFPS()))))
 }
 
 func (g *gameManager) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return g.Window.width, g.Window.height
+	return ebiten.WindowSize()
 }

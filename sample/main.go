@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	game := cogni.New("Cogni Sample Window", 800, 600)
+	game := cogni.New("Cogni Sample Window", 1024, 768)
 
 	game.Input.RegisterHoldKeyEvent(
 		cogni.KeyEvent{Key: ebiten.KeyW, Callback: func() { println("Walk up") }},
