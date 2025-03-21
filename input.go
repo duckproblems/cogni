@@ -8,8 +8,8 @@ type inputManager struct {
 	releaseEvents keyEventRegistry
 }
 
-type keyEventRegistry = map[ebiten.Key]keyEventHandler
-type keyEventHandler = func()
+type keyEventRegistry map[ebiten.Key]keyEventHandler
+type keyEventHandler func()
 
 type KeyEvent struct {
 	Key      ebiten.Key
