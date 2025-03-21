@@ -8,7 +8,12 @@ type windowManager struct {
 }
 
 func newWindowManager(title string, width, height int) *windowManager {
-	return &windowManager{title, width, height}
+	wm := windowManager{}
+
+	wm.SetTitle(title)
+	wm.Resize(width, height)
+
+	return &wm
 }
 
 func (w *windowManager) SetTitle(newTitle string) {
@@ -17,9 +22,9 @@ func (w *windowManager) SetTitle(newTitle string) {
 	ebiten.SetWindowTitle(w.title)
 }
 
-func (w *windowManager) Resize(width, height int) {
-	w.width = width
-	w.height = height
+func (w *windowManager) Resize(newWidth, newHeight int) {
+	w.width = newWidth
+	w.height = newHeight
 
 	ebiten.SetWindowSize(w.width, w.height)
 }

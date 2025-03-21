@@ -11,9 +11,6 @@ type gameManager struct {
 }
 
 func New(title string, width, height int) *gameManager {
-	ebiten.SetWindowSize(width, height)
-	ebiten.SetWindowTitle(title)
-
 	return &gameManager{
 		Window: newWindowManager(title, width, height),
 		Input:  newInputManager(),
