@@ -9,7 +9,7 @@ type inputManager struct {
 }
 
 type keyEventRegistry map[ebiten.Key]keyEventHandler
-type keyEventHandler func()
+type keyEventHandler func(float64)
 
 type KeyEvent struct {
 	Key      ebiten.Key
@@ -42,23 +42,23 @@ func (i *inputManager) RegisterReleaseKeyEvent(events ...KeyEvent) {
 	}
 }
 
-func (i *inputManager) execPressEvent(key ebiten.Key) {
+func (i *inputManager) execPressEvent(key ebiten.Key, delta float64) {
 	event, found := i.pressEvents[key]
 	if found {
-		event()
+		event(delta)
 	}
 }
 
-func (i *inputManager) execHoldEvent(key ebiten.Key) {
+func (i *inputManager) execHoldEvent(key ebiten.Key, delta float64) {
 	event, found := i.holdEvents[key]
 	if found {
-		event()
+		event(delta)
 	}
 }
 
-func (i *inputManager) execReleaseEvent(key ebiten.Key) {
+func (i *inputManager) execReleaseEvent(key ebiten.Key, delta float64) {
 	event, found := i.releaseEvents[key]
 	if found {
-		event()
+		event(delta)
 	}
 }
