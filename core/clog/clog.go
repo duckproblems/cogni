@@ -25,22 +25,18 @@ var levelPrefix = map[LogLevel]string{
 }
 
 type Logger struct {
-	level LogLevel
-}
-
-func NewLogger(level LogLevel) *Logger {
-	return &Logger{level: level}
+	Level LogLevel
 }
 
 func (l *Logger) logMessage(logLevel LogLevel, message string) {
-	if logLevel != FATAL && logLevel < l.level {
+	if logLevel != FATAL && logLevel < l.Level {
 		return
 	}
 
 	currentTime := time.Now().Format("2006-01-02 15:04:05")
 	prefix := levelPrefix[logLevel]
 
-    fmt.Printf("%s : %s\t> %s\n", currentTime, prefix, message)
+	fmt.Printf("%s : %s\t> %s\n", currentTime, prefix, message)
 
 	if logLevel == FATAL {
 		os.Exit(1)
