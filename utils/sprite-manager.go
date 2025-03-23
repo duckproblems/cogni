@@ -22,15 +22,15 @@ func LoadFromPath(path string, cellWidth, cellHeight int) (*Sprite, error) {
 
 	s := &Sprite{Image: sprite}
 
-	s.FrameSize.A = cellWidth
-	s.FrameSize.B = cellHeight
+	s.FrameSize.Left = cellWidth
+	s.FrameSize.Right = cellHeight
 
 	return s, nil
 }
 
 func (s *Sprite) SelectSubImage(col, row int) *ebiten.Image {
-	x := (col - 1) * s.FrameSize.A
-	y := (row - 1) * s.FrameSize.B
+	x := (col - 1) * s.FrameSize.Left
+	y := (row - 1) * s.FrameSize.Right
 
-	return s.Image.SubImage(image.Rect(x, y, x+s.FrameSize.A, y+s.FrameSize.B)).(*ebiten.Image)
+	return s.Image.SubImage(image.Rect(x, y, x+s.FrameSize.Left, y+s.FrameSize.Right)).(*ebiten.Image)
 }

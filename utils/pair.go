@@ -1,5 +1,9 @@
 package utils
 
 type Pair[T any] struct {
-	A, B T
+	Left, Right T
+}
+
+func (p Pair[T]) Tuple() (T, T) {
+	return p.Left, p.Right
 }
