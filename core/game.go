@@ -21,6 +21,7 @@ type Game struct {
 func NewGame(window Window) *Game {
 	ecsManager := ecs.New()
 	ecsManager.AddSystem(systems.Animate{})
+	ecsManager.AddSystem(systems.Movement{})
 
 	return &Game{
 		Window:     &window,
