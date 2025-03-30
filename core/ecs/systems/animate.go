@@ -19,12 +19,18 @@ func (a Animate) Update(ecs *ecs.ECSManager, delta float64) {
 			continue
 		}
 
+		if sprite.CurrentFrame == 0 && sprite.FrameTimer == 0 {
+			sprite.OnAnimationStart()
+		}
+
 		sprite.FrameTimer += delta
 		frameDuration := 1.0 / sprite.FrameSpeed
 
 		if sprite.FrameTimer >= frameDuration {
-			sprite.FrameTimer -= frameDuration
+			sprite.FrameTimer = 0
 			sprite.CurrentFrame++
+
+			sprite.OnAnimationFrame()
 
 			if sprite.CurrentFrame >= len(sprite.Frames) {
 				if sprite.Loop {
@@ -33,6 +39,8 @@ func (a Animate) Update(ecs *ecs.ECSManager, delta float64) {
 					sprite.CurrentFrame = len(sprite.Frames) - 1
 					sprite.Playing = false
 				}
+
+				sprite.OnAnimationEnd()
 			}
 		}
 	}

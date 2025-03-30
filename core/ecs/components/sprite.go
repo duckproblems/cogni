@@ -9,4 +9,8 @@ type Sprite struct {
 	FrameTimer   float64
 	Loop         bool
 	Playing      bool
+
+	OnAnimationStart func()
+	OnAnimationEnd   func()
+	OnAnimationFrame func()
 }
