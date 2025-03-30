@@ -22,9 +22,25 @@ func main() {
 			playerImage.SelectSubImage(1, 4),
 		},
 		FrameSpeed: 5.,
-		Loop:       true,
-		Playing:    true,
+		Loop:       false,
+		Playing:    false,
 	})
+
+	var sprite *components.Sprite
+	player.GetComponent(&sprite)
+
+	sprite.Playing = true
+	sprite.Loop = true
+	sprite.OnAnimationStart = func() {
+		println("Start")
+	}
+	sprite.OnAnimationFrame = func() {
+		println("Frame")
+	}
+	sprite.OnAnimationEnd = func() {
+		println("End")
+	}
+
 	player.AddComponent(&components.Transform{X: 30, Y: 30, ScaleX: 1, ScaleY: 1, Rotation: 0})
 
 	game.ECS.AddEntity(player)
