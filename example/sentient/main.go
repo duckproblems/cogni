@@ -84,7 +84,7 @@ func main() {
 	player.AddComponent(&components.Movement{
 		MaxSpeed:     100.,
 		Acceleration: 1000.,
-		Friction:     0.0001,
+		Friction:     0,
 		OnStartedMoving: func(vX, vY float64) {
 			sprite.Playing = true
 			updateAnimationDirection(vX, vY)
