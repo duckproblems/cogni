@@ -7,6 +7,7 @@ import (
 
 	"github.com/duckproblems/cogni/core/ecs"
 	"github.com/duckproblems/cogni/core/ecs/systems"
+	"github.com/duckproblems/cogni/core/input"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
@@ -14,6 +15,7 @@ import (
 type Game struct {
 	Window *Window
 	ECS    *ecs.ECSManager
+	Input  *input.Manager
 
 	lastUpdate time.Time
 }
@@ -26,6 +28,7 @@ func NewGame(window Window) *Game {
 	return &Game{
 		Window:     &window,
 		ECS:        ecsManager,
+		Input:      input.New(),
 		lastUpdate: time.Now(),
 	}
 }
@@ -38,6 +41,7 @@ func (g *Game) Update() error {
 	delta := time.Since(g.lastUpdate).Seconds()
 	g.lastUpdate = time.Now()
 
+	g.Input.Update()
 	g.ECS.Update(delta)
 
 	return nil
