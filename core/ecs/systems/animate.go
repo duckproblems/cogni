@@ -72,6 +72,10 @@ func (a Animate) Draw(ecs *ecs.ECSManager, screen *ebiten.Image) {
 		opts.GeoM.Rotate(transform.Rotation)
 		opts.GeoM.Scale(transform.ScaleX, transform.ScaleY)
 
+		if sprite.CurrentFrame >= len(sprite.Frames) {
+			sprite.CurrentFrame = len(sprite.Frames) - 1
+		}
+
 		screen.DrawImage(sprite.Frames[sprite.CurrentFrame], opts)
 	}
 }
