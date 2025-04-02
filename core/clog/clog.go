@@ -24,12 +24,10 @@ var levelPrefix = map[LogLevel]string{
 	FATAL: "FATAL",
 }
 
-type Logger struct {
-	Level LogLevel
-}
+var Level LogLevel = WARN
 
-func (l *Logger) logMessage(logLevel LogLevel, message string) {
-	if logLevel != FATAL && logLevel < l.Level {
+func logMessage(logLevel LogLevel, message string) {
+	if logLevel != FATAL && logLevel < Level {
 		return
 	}
 
@@ -43,22 +41,42 @@ func (l *Logger) logMessage(logLevel LogLevel, message string) {
 	}
 }
 
-func (l *Logger) Debug(message string) {
-	l.logMessage(DEBUG, message)
+func Debug(message string) {
+	logMessage(DEBUG, message)
 }
 
-func (l *Logger) Info(message string) {
-	l.logMessage(INFO, message)
+func Info(message string) {
+	logMessage(INFO, message)
 }
 
-func (l *Logger) Warn(message string) {
-	l.logMessage(WARN, message)
+func Warn(message string) {
+	logMessage(WARN, message)
 }
 
-func (l *Logger) Error(message string) {
-	l.logMessage(ERROR, message)
+func Error(message string) {
+	logMessage(ERROR, message)
 }
 
-func (l *Logger) Fatal(message string) {
-	l.logMessage(FATAL, message)
+func Fatal(message string) {
+	logMessage(FATAL, message)
+}
+
+func Debugf(format string, args ...any) {
+	logMessage(DEBUG, fmt.Sprintf(format, args...))
+}
+
+func Infof(format string, args ...any) {
+	logMessage(INFO, fmt.Sprintf(format, args...))
+}
+
+func Warnf(format string, args ...any) {
+	logMessage(WARN, fmt.Sprintf(format, args...))
+}
+
+func Errorf(format string, args ...any) {
+	logMessage(ERROR, fmt.Sprintf(format, args...))
+}
+
+func Fatalf(format string, args ...any) {
+	logMessage(FATAL, fmt.Sprintf(format, args...))
 }
