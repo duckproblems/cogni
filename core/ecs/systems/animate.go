@@ -3,12 +3,13 @@ package systems
 import (
 	"github.com/duckproblems/cogni/core/ecs"
 	"github.com/duckproblems/cogni/core/ecs/components"
+	"github.com/duckproblems/cogni/core/input"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type Animate struct{}
 
-func (a Animate) Update(ecs *ecs.ECSManager, delta float64) {
+func (sys *Animate) Update(ecs *ecs.ECSManager, inputManager *input.Manager, delta float64) {
 	for _, entity := range ecs.Entities {
 		var sprite *components.Sprite
 		if entity.GetComponent(&sprite) != nil {
@@ -50,7 +51,7 @@ func (a Animate) Update(ecs *ecs.ECSManager, delta float64) {
 	}
 }
 
-func (a Animate) Draw(ecs *ecs.ECSManager, screen *ebiten.Image) {
+func (sys *Animate) Draw(ecs *ecs.ECSManager, screen *ebiten.Image) {
 	for _, entity := range ecs.Entities {
 		var sprite *components.Sprite
 		if entity.GetComponent(&sprite) != nil {

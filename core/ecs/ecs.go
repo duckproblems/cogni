@@ -1,6 +1,9 @@
 package ecs
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/duckproblems/cogni/core/input"
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type ECSManager struct {
 	nextEntityID int
@@ -26,9 +29,9 @@ func (e *ECSManager) AddSystem(system System) {
 	e.Systems = append(e.Systems, system)
 }
 
-func (e *ECSManager) Update(delta float64) {
+func (e *ECSManager) Update(inputManager *input.Manager, delta float64) {
 	for _, system := range e.Systems {
-		system.Update(e, delta)
+		system.Update(e, inputManager, delta)
 	}
 }
 
