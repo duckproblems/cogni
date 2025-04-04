@@ -21,14 +21,22 @@ type Game struct {
 }
 
 func NewGame(window Window) *Game {
+	inputManager := input.New()
+
 	ecsManager := ecs.New()
-	ecsManager.AddSystem(systems.Animate{})
-	ecsManager.AddSystem(systems.Movement{})
+	ecsManager.AddSystem(&systems.Animate{})
+
+	ecsManager.AddSystem(&systems.PlayerInputSystem{})
+
+	ecsManager.AddSystem(&systems.MovementSystem{})
+	ecsManager.AddSystem(&systems.MovementEventSystem{})
+
+	ecsManager.AddSystem(&systems.PositionUpdateSystem{})
 
 	return &Game{
 		Window:     &window,
 		ECS:        ecsManager,
-		Input:      input.New(),
+		Input:      inputManager,
 		lastUpdate: time.Now(),
 	}
 }
@@ -42,7 +50,7 @@ func (g *Game) Update() error {
 	g.lastUpdate = time.Now()
 
 	g.Input.Update()
-	g.ECS.Update(delta)
+	g.ECS.Update(g.Input, delta)
 
 	return nil
 }
