@@ -25,27 +25,45 @@ func main() {
 		Loop:       true,
 		Playing:    true,
 	})
-	player.AddComponent(&components.Transform{X: 30, Y: 30, ScaleX: 5, ScaleY: 5, Rotation: 0})
-	player.AddComponent(&components.Input{})
+	player.AddComponent(&components.Transform{X: 30, Y: 30, ScaleX: 1, ScaleY: 1, Rotation: 0})
 
 	var sprite *components.Sprite
 	player.GetComponent(&sprite)
 
+	player.AddComponent(&components.InputControlled{})
+	player.AddComponent(&components.MovementIntent{})
 	player.AddComponent(&components.Movement{
-		MaxSpeed:     100.,
-		Acceleration: 1000.,
-		Friction:     0,
-		OnStartedMoving: func(vX, vY float64) {
+		MaxSpeed:     50,
+		Acceleration: 800,
+		Friction:     1,
+		OnStartedMoving: func(entity ecs.Entity, vX float64, vY float64) {
 			graphics.UpdateMovementAnimation(sprite, playerAnimSet, vX, vY)
 		},
-		OnStoppedMoving: func(vX, vY float64) {
+		OnCruising: func(entity ecs.Entity, vX float64, vY float64) {
 			graphics.UpdateMovementAnimation(sprite, playerAnimSet, vX, vY)
 		},
-		OnCruising: func(vX, vY float64) {
+		OnStoppedMoving: func(entity ecs.Entity, vX float64, vY float64) {
 			graphics.UpdateMovementAnimation(sprite, playerAnimSet, vX, vY)
 		},
 	})
 
+	npc := ecs.NewEntity("NPC")
+	npc.AddComponent(&components.Sprite{
+		Frames:     playerSpriteSheet.GetFrames(1, 1, 1, 1),
+		FrameSpeed: 5.,
+		Loop:       true,
+		Playing:    true,
+	})
+	npc.AddComponent(&components.Transform{X: 100, Y: 30, ScaleX: 1, ScaleY: 1, Rotation: 0})
+
+	npc.AddComponent(&components.MovementIntent{})
+	npc.AddComponent(&components.Movement{
+		MaxSpeed:     50,
+		Acceleration: 800,
+		Friction:     1,
+	})
+
 	game.ECS.AddEntity(player)
+	game.ECS.AddEntity(npc)
 	game.Run()
 }
